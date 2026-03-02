@@ -166,7 +166,6 @@
                             <th class="px-4 py-3">Nama Dokumen</th>
                             <th class="px-4 py-3">Revisi</th>
                             <th class="px-4 py-3">Unit Kerja</th>
-                            <th class="px-4 py-3">Uploader</th>
                             <th class="px-4 py-3">Tanggal</th>
                             <th class="px-4 py-3">Keterangan</th>
                             <th class="px-4 py-3">File</th>
@@ -181,18 +180,23 @@
                                 <td class="px-4 py-3 font-medium">{{ $doc->title }}</td>
                                 <td class="px-4 py-3">{{ $doc->revision }}</td>
                                 <td class="px-4 py-3">{{ $doc->department->name ?? '-' }}</td>
-                                <td class="px-4 py-3">{{ $doc->uploader_name ?? '-' }}</td>
+                                {{-- <td class="px-4 py-3">{{ $doc->uploader_name ?? '-' }}</td> --}}
                                 <td class="px-4 py-3">
                                     {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
                                 </td>
                                 <td class="px-4 py-3">{{ $doc->description }}</td>
                                 <td class="px-4 py-3 flex gap-2">
-                                    <a href="{{ route('admin.documents.preview', $doc->id) }}"
-                                         class="inline-block px-3 py-1.5 bg-blue-100 text-blue-700 font-medium text-xs rounded-lg
-                  hover:bg-blue-200 hover:shadow transition">
-                                        Lihat File
-                                    </a>
-                                    {{-- <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
+
+                                    @if ($doc->file_document)
+                                        <a href="{{ route('admin.documents.stream', $doc->id) }}"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
+                                            👁 Lihat File
+                                        </a>
+                                    @else
+                                        <span class="text-gray-400">Tidak ada file</span>
+                                    @endif
+                                </td>
+                                {{-- <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
                         <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button> --}}
                                 </td>
                             </tr>
