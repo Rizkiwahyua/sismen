@@ -155,23 +155,21 @@
     <table class="w-full text-sm">
         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
             <tr>
-                <th class="px-4 py-3">Action</th>
+                <th class="px-4 py-3">No</th>
                 <th class="px-4 py-3">Nomor</th>
                 <th class="px-4 py-3">Nama Dokumen</th>
                 <th class="px-4 py-3">Revisi</th>
                 <th class="px-4 py-3">Unit Kerja</th>
                 <th class="px-4 py-3">Uploader</th>
                 <th class="px-4 py-3">Tanggal</th>
+                  <th class="px-4 py-3">Action</th>
             </tr>
         </thead>
         <tbody class="divide-y">
             @foreach ($documents as $doc)
                 <tr class="doc-row hover:bg-gray-50" data-category="{{ $doc->category->slug }}">
-                    <td class="px-4 py-3 flex gap-2">
-                        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">⬇</button>
-                        <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
-                        <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button>
-                    </td>
+                    <td class="p-3">{{ $loop->iteration }}</td>
+
                     <td class="px-4 py-3">{{ $doc->document_number }}</td>
                     <td class="px-4 py-3 font-medium">{{ $doc->title }}</td>
                     <td class="px-4 py-3">{{ $doc->revision }}</td>
@@ -180,6 +178,11 @@
                     <td class="px-4 py-3">
     {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
 </td>
+<td class="px-4 py-3 flex gap-2">
+                        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">⬇</button>
+                        <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
+                        <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

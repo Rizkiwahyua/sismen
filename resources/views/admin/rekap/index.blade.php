@@ -91,10 +91,12 @@
         <table class="w-full text-sm text-left border-collapse">
             <thead>
                 <tr class="bg-gray-100 text-sm uppercase text-gray-600">
+                     <th class="p-3">No</th>
                     <th class="p-3">Nomor</th>
                     <th class="p-3">Nama Dokumen</th>
                     <th class="p-3">Revisi</th>
                     <th class="p-3">Unit Kerja</th>
+                    <th class="p-3">File</th>
                     <th class="p-3">Keterangan</th>
                     <th class="p-3">Tanggal</th>
                      <th class="p-3">Aksi</th>
@@ -104,10 +106,22 @@
             <tbody>
                 @forelse ($documents as $doc)
                     <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $doc->document_number }}</td>
                         <td class="p-3 font-semibold">{{ $doc->title }}</td>
                         <td class="p-3">{{ $doc->revision ?? 0 }}</td>
                         <td class="p-3">{{ $doc->department->name ?? '-' }}</td>
+                        <td class="p-3">
+    @if($doc->file_document)
+        <a href="{{ asset($doc->file_document) }}" target="_blank"
+           class="inline-block px-3 py-1.5 bg-blue-100 text-blue-700 font-medium text-xs rounded-lg
+                  hover:bg-blue-200 hover:shadow transition">
+            Lihat File
+        </a>
+    @else
+        <span class="text-gray-400">-</span>
+    @endif
+</td>
                         <td class="p-3">{{ $doc->description ?? '-' }}</td>
                         <td class="p-3">
                             {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}

@@ -105,13 +105,14 @@
             <table class="w-full text-sm text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-sm uppercase text-gray-600">
-                        <th class="p-3">Action</th>
+                        <th class="p-3">No</th>
                         <th class="p-3">Nomor</th>
                         <th class="p-3">Nama Dokumen</th>
                         <th class="p-3">Revisi</th>
                         <th class="p-3">Unit Kerja</th>
                         <th class="p-3">Keterangan</th>
                         <th class="p-3">Tanggal</th>
+                        <th class="p-3">Action</th>
                     </tr>
                 </thead>
 
@@ -119,29 +120,9 @@
                     @forelse ($documents as $doc)
                         <tr class="border-b hover:bg-gray-50">
 
+                               <td class="p-3">{{ $loop->iteration }}</td>
                             <!-- ACTION -->
-                            <td class="p-3 flex gap-2">
 
-                                <a href="{{ route('admin.documents.preview', $doc->id) }}"
-                                    class="bg-blue-500 text-white px-2 py-1 rounded text-xs">
-                                    👁
-                                </a>
-
-                                {{-- @if ($doc->file_document)
-                                    <a href="{{ asset($doc->file_document) }}"
-                                        class="bg-green-500 text-white px-2 py-1 rounded text-xs">
-                                        ⬇
-                                    </a>
-                                @endif --}}
-
-                                <a href="{{ route('admin.documents.edit', $doc->id) }}"
-                                    class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">
-                                    ✏
-                                </a>
-                                <button type="button" onclick="openDeleteModal({{ $doc->id }})"
-                                    class="bg-red-500 text-white px-2 py-1 rounded text-xs">
-                                    🗑
-                                </button>
 
                                 <!-- NOMOR -->
                             <td class="p-3">{{ $doc->document_number }}</td>
@@ -168,6 +149,28 @@
                             <td class="p-3">
                                 {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
                             </td>
+                             <td class="p-3 flex gap-2">
+
+                                <a href="{{ route('admin.documents.preview', $doc->id) }}"
+                                    class="bg-blue-500 text-white px-2 py-1 rounded text-xs">
+                                    👁
+                                </a>
+
+                                {{-- @if ($doc->file_document)
+                                    <a href="{{ asset($doc->file_document) }}"
+                                        class="bg-green-500 text-white px-2 py-1 rounded text-xs">
+                                        ⬇
+                                    </a>
+                                @endif --}}
+
+                                <a href="{{ route('admin.documents.edit', $doc->id) }}"
+                                    class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">
+                                    ✏
+                                </a>
+                                <button type="button" onclick="openDeleteModal({{ $doc->id }})"
+                                    class="bg-red-500 text-white px-2 py-1 rounded text-xs">
+                                    🗑
+                                </button>
 
                         </tr>
                     @empty
