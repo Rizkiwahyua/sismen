@@ -68,6 +68,10 @@
         <!-- Show + Search -->
         <div class="flex justify-between items-center mb-4">
 
+      <a href="{{ route('admin.documents.export', ['category' => request('category', 'all')]) }}"
+   class="btn btn-success">
+   Export Excel
+</a>
             <div class="text-sm text-gray-600">
                 Show
                 <select class="border border-gray-300 rounded px-2 py-1 text-sm mx-1">

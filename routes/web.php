@@ -10,6 +10,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RekapController;
+use App\Exports\DocumentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 // Halaman login
 Route::get('/', function () {
     return redirect()->route('login');
@@ -32,6 +35,17 @@ Route::middleware(['auth', 'role:admin'])
     ->as('admin.')
     ->group(function () {
 
+
+     Route::prefix('rekap')
+            ->name('rekap.')
+            ->group(function () {
+
+                Route::get('/', [RekapController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/export', [RekapController::class, 'export'])
+                    ->name('export');
+            });
         // Dashboard
         Route::get('/dashboard', [AdminController::class, 'index'])
             ->name('dashboard'); // nama route = admin.dashboard
@@ -83,6 +97,18 @@ Route::middleware(['auth', 'role:admin'])
             [DocumentController::class, 'forceDelete']
         )->name('documents.forceDelete');
     });
+
+    Route::get('/admin/documents/export', function () {
+    return Excel::download(new DocumentsExport, 'data-dokumen.xlsx');
+})->name('admin.documents.export');
+    Route::get('/admin/documents/export',
+        [DocumentController::class, 'export']
+    )->name('admin.documents.export');
+
+    Route::get('/rekap', [RekapController::class, 'index'])
+                ->name('rekap.index');
+
+
 
 // ============================
 // User Routes

@@ -86,6 +86,28 @@
     </a>
 </li>
 
+<li>
+    <a href="{{ route('admin.rekap.index') }}"
+       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
+       {{ request()->routeIs('admin.rekap.*')
+            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
+            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
+
+        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
+            {{ request()->routeIs('admin.rekap.*')
+                ? 'bg-white text-indigo-700 shadow-md'
+                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
+
+            <i class="bi bi-hash text-lg"></i>
+        </span>
+
+        <span class="font-medium tracking-wide">
+            Rekap Dokumen
+        </span>
+    </a>
+</li>
+
+
 <!-- User -->
 <li>
     <a href="{{ route('admin.user.index') }}"
@@ -111,7 +133,7 @@
             ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
             : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
         <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.user.*')
+            {{ request()->routeIs('admin.documents.*')
                 ? 'bg-white text-indigo-700'
                 : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
             <i class="bi bi-people text-lg"></i>

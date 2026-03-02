@@ -9,6 +9,8 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DocumentsExport;
 
 class DocumentController extends Controller
 {
@@ -93,6 +95,7 @@ class DocumentController extends Controller
             'departments' => Department::all(),
         ]);
     }
+
 
     public function store(Request $request)
     {
@@ -250,4 +253,21 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.trash')
             ->with('success', 'Dokumen dihapus permanen');
     }
+
+   public function export(Request $request)
+{
+    $query = Document::with(['category', 'department']);
+
+    // Kalau ada filter category dan bukan all
+    if ($request->filled('category') && $request->category != 'all') {
+
+        $query->whereHas('category', function ($q) use ($request) {
+            $q->where('slug', $request->category);
+        });
+    }
+
+    $documents = $query->latest()->get();
+
+    return Excel::download(new DocumentsExport($documents), 'Data_Dokumen.xlsx');
+}
 }
