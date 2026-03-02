@@ -7,45 +7,55 @@
     <!-- ================= CARDS ================= -->
     <div class="grid grid-cols-4 md:grid-cols-4 gap-4 mb-6">
 
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
-            <span class="text-sm font-medium">Semua Dokumen</span>
-            <span class="text-xl font-bold">120</span>
-        </div>
-
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-green-50 text-green-700 shadow-sm">
-            <span class="text-sm font-medium">Ratifikasi</span>
-            <span class="text-xl font-bold">20</span>
-        </div>
-
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-blue-50 text-blue-700 shadow-sm">
-            <span class="text-sm font-medium">Pedoman</span>
-            <span class="text-xl font-bold">30</span>
-        </div>
-
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-purple-50 text-purple-700 shadow-sm">
-            <span class="text-sm font-medium">Prosedur</span>
-            <span class="text-xl font-bold">25</span>
-        </div>
-
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-amber-50 text-amber-700 shadow-sm">
-            <span class="text-sm font-medium">Instruksi</span>
-            <span class="text-xl font-bold">28</span>
-        </div>
-
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-rose-50 text-rose-700 shadow-sm">
-            <span class="text-sm font-medium">Formulir</span>
-            <span class="text-xl font-bold">17</span>
-        </div>
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
-            <span class="text-sm font-medium">Departemen</span>
-            <span class="text-xl font-bold">120</span>
-        </div>
-        <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
-            <span class="text-sm font-medium">Users</span>
-            <span class="text-xl font-bold">120</span>
-        </div>
+    <!-- Semua Dokumen -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
+        <span class="text-sm font-medium">Semua Dokumen</span>
+        <span class="text-xl font-bold">{{ $totalDokumen }}</span>
     </div>
 
+    <!-- Ratifikasi -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-green-50 text-green-700 shadow-sm">
+        <span class="text-sm font-medium">Ratifikasi</span>
+        <span class="text-xl font-bold">{{ $totalRatifikasi }}</span>
+    </div>
+
+    <!-- Pedoman -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-blue-50 text-blue-700 shadow-sm">
+        <span class="text-sm font-medium">Pedoman</span>
+        <span class="text-xl font-bold">{{ $totalPedoman }}</span>
+    </div>
+
+    <!-- Prosedur -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-purple-50 text-purple-700 shadow-sm">
+        <span class="text-sm font-medium">Prosedur</span>
+        <span class="text-xl font-bold">{{ $totalProsedur }}</span>
+    </div>
+
+    <!-- Instruksi -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-amber-50 text-amber-700 shadow-sm">
+        <span class="text-sm font-medium">Instruksi</span>
+        <span class="text-xl font-bold">{{ $totalInstruksi }}</span>
+    </div>
+
+    <!-- Formulir -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-rose-50 text-rose-700 shadow-sm">
+        <span class="text-sm font-medium">Formulir</span>
+        <span class="text-xl font-bold">{{ $totalFormulir }}</span>
+    </div>
+
+    <!-- Departemen -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
+        <span class="text-sm font-medium">Departemen</span>
+        <span class="text-xl font-bold">{{ $totalDepartemen }}</span>
+    </div>
+
+    <!-- Users -->
+    <div class="rounded-xl px-4 py-3 flex items-center justify-between bg-indigo-50 text-indigo-700 shadow-sm">
+        <span class="text-sm font-medium">Users</span>
+        <span class="text-xl font-bold">{{ $totalUsers }}</span>
+    </div>
+
+</div>
     <!-- ================= SEARCH SECTION (SOFT) ================= -->
     <div class="bg-white rounded-2xl shadow p-4 mb-6">
 

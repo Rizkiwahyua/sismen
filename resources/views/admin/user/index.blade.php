@@ -79,7 +79,7 @@
                                 </td>
 
                                 <td class="px-4 py-3">
-                                <td>{{ $user->department_name ?? '-' }}</td>
+                                {{ $user->department_name ?? '-' }}
                                 </td>
 
                                 <td class="px-4 py-3">

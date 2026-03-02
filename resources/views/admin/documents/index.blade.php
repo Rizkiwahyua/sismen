@@ -3,54 +3,6 @@
 @section('content')
     <div class="grid grid-cols-4 gap-4 mb-6">
 
-        <a href="{{ route('admin.documents.byCategory', 'all') }}"
-            class="bg-blue-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Semua Dokumen</div>
-            <div class="text-2xl font-bold text-blue-700">
-                {{ $totalDocuments }}
-            </div>
-        </a>
-
-        <a href="{{ route('admin.documents.byCategory', 'ratifikasi') }}"
-            class="bg-green-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Ratifikasi</div>
-            <div class="text-2xl font-bold text-green-700">
-                {{ $ratifikasi }}
-            </div>
-        </a>
-
-        <a href="{{ route('admin.documents.byCategory', 'pedoman') }}"
-            class="bg-indigo-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Pedoman</div>
-            <div class="text-2xl font-bold text-indigo-700">
-                {{ $pedoman }}
-            </div>
-        </a>
-
-        <a href="{{ route('admin.documents.byCategory', 'prosedur') }}"
-            class="bg-purple-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Prosedur</div>
-            <div class="text-2xl font-bold text-purple-700">
-                {{ $prosedur }}
-            </div>
-        </a>
-
-        <a href="{{ route('admin.documents.byCategory', 'instruksikerja') }}"
-            class="bg-yellow-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Instruksi Kerja</div>
-            <div class="text-2xl font-bold text-yellow-700">
-                {{ $instruksikerja }}
-            </div>
-        </a>
-
-        <a href="{{ route('admin.documents.byCategory', 'formulir') }}"
-            class="bg-red-100 p-4 rounded-xl shadow hover:scale-105 transition block">
-            <div class="text-gray-600 text-sm">Formulir</div>
-            <div class="text-2xl font-bold text-red-700">
-                {{ $formulir }}
-            </div>
-        </a>
-
     </div>
     <div class="bg-indigo-600 text-white px-6 py-3 rounded-t-xl">
         <h2 class="font-semibold text-lg">Data Dokumen</h2>

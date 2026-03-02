@@ -129,7 +129,7 @@
 <li>
     <a href="{{ route('admin.documents.trash') }}"
        class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.user.*')
+       {{ request()->routeIs('admin.documents.*')
             ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
             : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
         <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300

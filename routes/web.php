@@ -45,6 +45,7 @@ Route::middleware(['auth', 'role:admin'])
 
                 Route::get('/export', [RekapController::class, 'export'])
                     ->name('export');
+                Route::resource('documents', DocumentController::class);
             });
         // Dashboard
         Route::get('/dashboard', [AdminController::class, 'index'])
