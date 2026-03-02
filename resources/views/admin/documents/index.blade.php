@@ -150,7 +150,6 @@
                                 {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
                             </td>
                              <td class="p-3 flex gap-2">
-
                                 <a href="{{ route('admin.documents.preview', $doc->id) }}"
                                     class="bg-blue-500 text-white px-2 py-1 rounded text-xs">
                                     👁

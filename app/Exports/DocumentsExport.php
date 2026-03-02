@@ -39,7 +39,6 @@ class DocumentsExport implements
                 'Unit Kerja'       => $doc->department->name ?? '-',
                 'Tanggal Dokumen'  => \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y'),
                 'Keterangan'       => $doc->description ?? '-',
-                'Status'           => $doc->deleted_at ? 'Terhapus' : 'Aktif',
             ];
         });
     }
@@ -56,7 +55,6 @@ class DocumentsExport implements
             'Unit Kerja',
             'Tanggal Dokumen',
             'Keterangan',
-            'Status',
         ];
     }
 
