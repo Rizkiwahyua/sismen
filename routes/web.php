@@ -99,9 +99,9 @@ Route::middleware(['auth', 'role:admin'])
         )->name('documents.forceDelete');
     });
 
-    Route::get('/admin/documents/export', function () {
-    return Excel::download(new DocumentsExport, 'data-dokumen.xlsx');
-})->name('admin.documents.export');
+//     Route::get('/admin/documents/export', function () {
+//     return Excel::download(new DocumentsExport, 'data-dokumen.xlsx');
+// })->name('admin.documents.export');
     Route::get('/admin/documents/export',
         [DocumentController::class, 'export']
     )->name('admin.documents.export');

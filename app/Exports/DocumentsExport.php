@@ -35,12 +35,11 @@ class DocumentsExport implements
                 'Judul'            => $doc->title,
                 'Revisi'           => $doc->revision ?? 0,
                 'Kategori'         => $doc->category->name ?? '-',
-                'Kode Dokumen'     => $doc->code->name ?? '-',
+                'Kode Dokumen'     => $doc->code->code ?? '-',
                 'Unit Kerja'       => $doc->department->name ?? '-',
                 'Tanggal Dokumen'  => \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y'),
                 'Keterangan'       => $doc->description ?? '-',
                 'Status'           => $doc->deleted_at ? 'Terhapus' : 'Aktif',
-                'Alasan Hapus'     => $doc->delete_reason ?? '-',
             ];
         });
     }
@@ -58,7 +57,6 @@ class DocumentsExport implements
             'Tanggal Dokumen',
             'Keterangan',
             'Status',
-            'Alasan Hapus',
         ];
     }
 

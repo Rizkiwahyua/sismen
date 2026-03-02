@@ -76,14 +76,10 @@
             overflow-hidden
             shadow-sm">
 
-                <input type="text" placeholder="Cari dokumen..."
-                    class="w-full px-4 py-2 text-sm text-gray-700
-               focus:outline-none focus:ring-2 focus:ring-indigo-200">
+                <input type="text" id="searchInput" placeholder="Cari dokumen..."
+    class="w-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-200">
 
-                <button class="px-4 bg-indigo-500 hover:bg-indigo-600
-               text-white text-sm transition">
-                    Cari
-                </button>
+
 
             </div>
 
@@ -104,37 +100,35 @@
 
         <!-- ================= FILTER KATEGORI ================= -->
         <div class="flex gap-4 text-sm text-gray-500 border-b pb-3 mb-4">
+    <a href="{{ route('admin.dashboard', ['category' => 'all']) }}" class="filter-btn {{ request('category') == 'all' ? 'active' : '' }}">
+        <i class="bi bi-grid-fill"></i>
+        <span>Semua</span>
+    </a>
 
-            <button class="filter-btn active" data-filter="all">
-                <i class="bi bi-grid-fill"></i>
-                <span>Semua</span>
-            </button>
+    <a href="{{ route('admin.dashboard', ['category' => 'ratifikasi']) }}" class="filter-btn {{ request('category') == 'ratifikasi' ? 'active' : '' }}">
+        <i class="bi bi-patch-check-fill"></i>
+        <span>Ratifikasi</span>
+    </a>
 
-            <button class="filter-btn" data-filter="ratifikasi">
-                <i class="bi bi-patch-check-fill"></i>
-                <span>Ratifikasi</span>
-            </button>
+    <a href="{{ route('admin.dashboard', ['category' => 'pedoman']) }}" class="filter-btn {{ request('category') == 'pedoman' ? 'active' : '' }}">
+        <i class="bi bi-journal-bookmark-fill"></i>
+        <span>Pedoman</span>
+    </a>
 
-            <button class="filter-btn" data-filter="pedoman">
-                <i class="bi bi-journal-bookmark-fill"></i>
-                <span>Pedoman</span>
-            </button>
+    <a href="{{ route('admin.dashboard', ['category' => 'prosedur']) }}" class="filter-btn {{ request('category') == 'prosedur' ? 'active' : '' }}">
+        <i class="bi bi-diagram-3-fill"></i>
+        <span>Prosedur</span>
+    </a>
 
-            <button class="filter-btn" data-filter="prosedur">
-                <i class="bi bi-diagram-3-fill"></i>
-                <span>Prosedur</span>
-            </button>
+    <a href="{{ route('admin.dashboard', ['category' => 'instruksikerja']) }}" class="filter-btn {{ request('category') == 'instruksikerja' ? 'active' : '' }}">
+        <i class="bi bi-gear-fill"></i>
+        <span>Instruksi Kerja</span>
+    </a>
 
-            <button class="filter-btn" data-filter="instruksi">
-                <i class="bi bi-gear-fill"></i>
-                <span>Instruksi Kerja</span>
-            </button>
-
-            <button class="filter-btn" data-filter="formulir">
-                <i class="bi bi-ui-checks-grid"></i>
-                <span>Formulir</span>
-            </button>
-
+    <a href="{{ route('admin.dashboard', ['category' => 'formulir']) }}" class="filter-btn {{ request('category') == 'formulir' ? 'active' : '' }}">
+        <i class="bi bi-ui-checks-grid"></i>
+        <span>Formulir</span>
+    </a>
         </div>
 
         <!-- ================= TABLE CONTAINER ================= -->
@@ -154,68 +148,43 @@
                     entries
                 </div>
 
-                <!-- search -->
-                <div class="flex border border-gray-300 rounded-lg overflow-hidden">
-                    <input type="text" placeholder="Search..." class="px-3 py-1 text-sm focus:outline-none">
-                    <button class="px-3 bg-indigo-500 text-white text-sm">
-                        Cari
-                    </button>
-                </div>
-
             </div>
 
             <!-- ================= TABLE ================= -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-
-                    <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
-                        <tr>
-                            <th class="px-4 py-3">Action</th>
-                            <th class="px-4 py-3">Nomor</th>
-                            <th class="px-4 py-3">Nama Dokumen</th>
-                            <th class="px-4 py-3">Revisi</th>
-                            <th class="px-4 py-3">Unit Kerja</th>
-                            <th class="px-4 py-3">Uploader</th>
-                            <th class="px-4 py-3">Tanggal</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y">
-
-                        <!-- PEDOMAN -->
-                        <tr class="doc-row hover:bg-gray-50" data-category="pedoman">
-                            <td class="px-4 py-3 flex gap-2">
-                                <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">⬇</button>
-                                <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
-                                <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button>
-                            </td>
-                            <td class="px-4 py-3">SKD/50/III/2019</td>
-                            <td class="px-4 py-3 font-medium">Pedoman K3LH.pdf</td>
-                            <td class="px-4 py-3">0</td>
-                            <td class="px-4 py-3">Departemen K3</td>
-                            <td class="px-4 py-3">Iwan</td>
-                            <td class="px-4 py-3">14-11-2024</td>
-                        </tr>
-
-                        <!-- RATIFIKASI -->
-                        <tr class="doc-row hover:bg-gray-50" data-category="ratifikasi">
-                            <td class="px-4 py-3 flex gap-2">
-                                <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">⬇</button>
-                                <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
-                                <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button>
-                            </td>
-                            <td class="px-4 py-3">RTF/21/I/2025</td>
-                            <td class="px-4 py-3 font-medium">Ratifikasi ISO.pdf</td>
-                            <td class="px-4 py-3">1</td>
-                            <td class="px-4 py-3">QA</td>
-                            <td class="px-4 py-3">Admin</td>
-                            <td class="px-4 py-3">01-01-2025</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-            </div>
+           <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+        <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+            <tr>
+                <th class="px-4 py-3">Action</th>
+                <th class="px-4 py-3">Nomor</th>
+                <th class="px-4 py-3">Nama Dokumen</th>
+                <th class="px-4 py-3">Revisi</th>
+                <th class="px-4 py-3">Unit Kerja</th>
+                <th class="px-4 py-3">Uploader</th>
+                <th class="px-4 py-3">Tanggal</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y">
+            @foreach ($documents as $doc)
+                <tr class="doc-row hover:bg-gray-50" data-category="{{ $doc->category->slug }}">
+                    <td class="px-4 py-3 flex gap-2">
+                        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">⬇</button>
+                        <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">✏</button>
+                        <button class="bg-red-500 text-white px-2 py-1 rounded text-xs">🗑</button>
+                    </td>
+                    <td class="px-4 py-3">{{ $doc->document_number }}</td>
+                    <td class="px-4 py-3 font-medium">{{ $doc->title }}</td>
+                    <td class="px-4 py-3">{{ $doc->revision }}</td>
+                    <td class="px-4 py-3">{{ $doc->department->name ?? '-' }}</td>
+                    <td class="px-4 py-3">{{ $doc->uploader_name ?? '-' }}</td>
+                    <td class="px-4 py-3">
+    {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
+</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
         </div>
 
@@ -268,5 +237,29 @@
                 });
             }
         </script>
+<script>
+    const buttons = document.querySelectorAll('.filter-btn');
+let activeFilter = '{{ request("category") ?? "all" }}';
 
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        filterTable();
+    });
+});
+
+function filterTable() {
+    const keyword = searchInput.value.toLowerCase();
+
+    rows.forEach(row => {
+        const matchCategory = activeFilter === 'all' || row.dataset.category === activeFilter;
+        const matchSearch = row.innerText.toLowerCase().includes(keyword);
+        row.style.display = (matchCategory && matchSearch) ? '' : 'none';
+    });
+}
+
+searchInput.addEventListener('keyup', filterTable);
+    </script>
     @endsection
