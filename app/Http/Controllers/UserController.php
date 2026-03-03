@@ -7,37 +7,38 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\DocumentCategory;
+
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-   $totalDokumen = Document::count();
+        $totalDokumen = Document::count();
 
-// Misal hitung kategori tertentu
-$totalRatifikasi = Document::whereHas('category', function($q) {
-    $q->where('name', 'ratifikasi');
-})->count();
+        // Misal hitung kategori tertentu
+        $totalRatifikasi = Document::whereHas('category', function ($q) {
+            $q->where('name', 'ratifikasi');
+        })->count();
 
-$totalPedoman = Document::whereHas('category', function($q) {
-    $q->where('name', 'pedoman');
-})->count();
+        $totalPedoman = Document::whereHas('category', function ($q) {
+            $q->where('name', 'pedoman');
+        })->count();
 
-$totalProsedur = Document::whereHas('category', function($q) {
-    $q->where('name', 'prosedur');
-})->count();
+        $totalProsedur = Document::whereHas('category', function ($q) {
+            $q->where('name', 'prosedur');
+        })->count();
 
-$totalInstruksi = Document::whereHas('category', function($q) {
-    $q->where('name', 'instruksi');
-})->count();
+        $totalInstruksi = Document::whereHas('category', function ($q) {
+            $q->where('name', 'instruksi');
+        })->count();
 
-$totalFormulir = Document::whereHas('category', function($q) {
-    $q->where('name', 'formulir');
-})->count();
+        $totalFormulir = Document::whereHas('category', function ($q) {
+            $q->where('name', 'formulir');
+        })->count();
 
-// Departemen dan Users
-$totalDepartemen = Department::count();
-$totalUsers = User::count();
-$query = Document::with(['category', 'code', 'department']);
+        // Departemen dan Users
+        $totalDepartemen = Department::count();
+        $totalUsers = User::count();
+        $query = Document::with(['category', 'code', 'department']);
 
         if ($request->has('category') && $request->category != 'all') {
             $query->whereHas('category', function ($q) use ($request) {
@@ -76,8 +77,15 @@ $query = Document::with(['category', 'code', 'department']);
         $formulirPercent = round(($formulir / $total) * 100);
 
         return view('user.index', compact(
-        'totalDokumen', 'totalRatifikasi', 'totalPedoman', 'totalProsedur',
-    'totalInstruksi', 'totalFormulir', 'totalDepartemen', 'totalUsers','documents',
+            'totalDokumen',
+            'totalRatifikasi',
+            'totalPedoman',
+            'totalProsedur',
+            'totalInstruksi',
+            'totalFormulir',
+            'totalDepartemen',
+            'totalUsers',
+            'documents',
             'totalDocuments',
             'ratifikasi',
             'pedoman',
@@ -88,5 +96,4 @@ $query = Document::with(['category', 'code', 'department']);
             'totalUsers'
         ));
     }
-
 }

@@ -20,41 +20,36 @@ class DocumentController extends Controller
     {
         $query = Document::with(['category', 'code', 'department']);
 
-        if ($request->has('category') && $request->category != 'all') {
+        // FILTER CATEGORY
+        if ($request->filled('category') && $request->category != 'all') {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
-        $documents = $query->latest()->get();
 
-        // ===== HITUNG STATISTIK =====
+        // SEARCH
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('document_number', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $documents = $query->latest()->paginate(10)->withQueryString();
+
+        // STATISTIK (biarkan seperti sebelumnya)
         $totalDocuments = Document::count();
-
-        $ratifikasi = Document::whereHas('category', fn($q) =>
-        $q->where('slug', 'ratifikasi'))->count();
-
-        $pedoman = Document::whereHas('category', fn($q) =>
-        $q->where('slug', 'pedoman'))->count();
-
-        $prosedur = Document::whereHas('category', fn($q) =>
-        $q->where('slug', 'prosedur'))->count();
-
-        $instruksikerja = Document::whereHas('category', fn($q) =>
-        $q->where('slug', 'instruksikerja'))->count();
-
-        $formulir = Document::whereHas('category', fn($q) =>
-        $q->where('slug', 'formulir'))->count();
+        $ratifikasi = Document::whereHas('category', fn($q) => $q->where('slug', 'ratifikasi'))->count();
+        $pedoman = Document::whereHas('category', fn($q) => $q->where('slug', 'pedoman'))->count();
+        $prosedur = Document::whereHas('category', fn($q) => $q->where('slug', 'prosedur'))->count();
+        $instruksikerja = Document::whereHas('category', fn($q) => $q->where('slug', 'instruksikerja'))->count();
+        $formulir = Document::whereHas('category', fn($q) => $q->where('slug', 'formulir'))->count();
 
         $totalDepartments = Department::count();
         $totalUsers = User::count();
-
-        $total = max($totalDocuments, 1);
-
-        $ratifikasiPercent = round(($ratifikasi / $total) * 100);
-        $pedomanPercent = round(($pedoman / $total) * 100);
-        $prosedurPercent = round(($prosedur / $total) * 100);
-        $instruksikerjaPercent = round(($instruksikerja / $total) * 100);
-        $formulirPercent = round(($formulir / $total) * 100);
 
         return view('admin.documents.index', compact(
             'documents',
@@ -68,7 +63,6 @@ class DocumentController extends Controller
             'totalUsers'
         ));
     }
-
     public function byCategory($slug)
     {
         if ($slug == 'all') {
@@ -255,20 +249,20 @@ class DocumentController extends Controller
             ->with('success', 'Dokumen dihapus permanen');
     }
 
-   public function export(Request $request)
-{
-    $query = Document::with(['category', 'department']);
+    public function export(Request $request)
+    {
+        $query = Document::with(['category', 'department']);
 
-    // Kalau ada filter category dan bukan all
-    if ($request->filled('category') && $request->category != 'all') {
+        // Kalau ada filter category dan bukan all
+        if ($request->filled('category') && $request->category != 'all') {
 
-        $query->whereHas('category', function ($q) use ($request) {
-            $q->where('slug', $request->category);
-        });
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        }
+
+        $documents = $query->latest()->get();
+
+        return Excel::download(new DocumentsExport($documents), 'Data_Dokumen.xlsx');
     }
-
-    $documents = $query->latest()->get();
-
-    return Excel::download(new DocumentsExport($documents), 'Data_Dokumen.xlsx');
-}
 }

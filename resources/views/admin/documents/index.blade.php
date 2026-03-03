@@ -1,187 +1,169 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="grid grid-cols-4 gap-4 mb-6">
-
-    </div>
-    <div class="bg-indigo-600 text-white px-6 py-3 rounded-t-xl">
-        <h2 class="font-semibold text-lg">Data Dokumen</h2>
-    </div>
-
-    <div class="bg-white rounded-b-xl shadow border border-gray-100 p-5">
-
-        <!-- Tombol Tambah -->
-        <div class="flex justify-end mb-4">
-            <a href="{{ route('admin.documents.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
-                Tambah Dokumen
-            </a>
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800">Data Dokumen</h2>
+            <p class="text-sm text-gray-500">Kelola seluruh dokumen sistem</p>
         </div>
 
-        <!-- Show + Search -->
-        <div class="flex justify-between items-center mb-4">
+        <a href="{{ route('admin.documents.create') }}"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl shadow-md transition">
+            + Tambah Dokumen
+        </a>
+    </div>
 
-      {{-- <a href="{{ route('admin.documents.export', ['category' => request('category', 'all')]) }}"
-   class="btn btn-success">
-   Export Excel
-</a> --}}
-            <div class="text-sm text-gray-600">
-                Show
-                <select class="border border-gray-300 rounded px-2 py-1 text-sm mx-1">
-                    <option>10</option>
-                    <option>20</option>
-                    <option>50</option>
-                </select>
-                entries
-            </div>
+    <form method="GET" action="{{ route('admin.documents.index') }}"
+        class="flex border border-gray-300 rounded-xl overflow-hidden shadow-sm">
 
-            <div class="flex border border-gray-300 rounded-lg overflow-hidden">
-                <input type="text" placeholder="Search..." class="px-3 py-1 text-sm focus:outline-none">
-                <button class="px-3 bg-indigo-500 text-white text-sm">
-                    Cari
-                </button>
-            </div>
+        {{-- Pertahankan category --}}
+        <input type="hidden" name="category" value="{{ request('category', 'all') }}">
 
-        </div>
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari dokumen..."
+            class="px-4 py-2 text-sm focus:outline-none w-48" onkeyup="debounceSearch(this.form)">
+    </form>
 
-        @php
-            $currentCategory = request('category', 'all');
+    @php
+        $currentCategory = request('category', 'all');
 
-        @endphp
+    @endphp
 
-        <div class="flex gap-3 mb-6 flex-wrap">
+    <div class="flex gap-3 mb-6 flex-wrap">
 
-            <!-- Semua -->
-            <a href="{{ route('admin.documents.index') }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Semua -->
+        <a href="{{ route('admin.documents.index') }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'all' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-grid"></i>
-                Semua
-            </a>
+            <i class="bi bi-grid"></i>
+            Semua
+        </a>
 
-            <!-- Ratifikasi -->
-            <a href="{{ route('admin.documents.index', ['category' => 'ratifikasi']) }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Ratifikasi -->
+        <a href="{{ route('admin.documents.index', ['category' => 'ratifikasi']) }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'ratifikasi' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-patch-check"></i>
-                Ratifikasi
-            </a>
+            <i class="bi bi-patch-check"></i>
+            Ratifikasi
+        </a>
 
-            <!-- Pedoman -->
-            <a href="{{ route('admin.documents.index', ['category' => 'pedoman']) }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Pedoman -->
+        <a href="{{ route('admin.documents.index', ['category' => 'pedoman']) }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'pedoman' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-journal-text"></i>
-                Pedoman
-            </a>
+            <i class="bi bi-journal-text"></i>
+            Pedoman
+        </a>
 
-            <!-- Prosedur -->
-            <a href="{{ route('admin.documents.index', ['category' => 'prosedur']) }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Prosedur -->
+        <a href="{{ route('admin.documents.index', ['category' => 'prosedur']) }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'prosedur' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-diagram-3"></i>
-                Prosedur
-            </a>
+            <i class="bi bi-diagram-3"></i>
+            Prosedur
+        </a>
 
-            <!-- Instruksi Kerja -->
-            <a href="{{ route('admin.documents.index', ['category' => 'instruksikerja']) }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Instruksi Kerja -->
+        <a href="{{ route('admin.documents.index', ['category' => 'instruksikerja']) }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'instruksikerja' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-gear"></i>
-                Instruksi Kerja
-            </a>
+            <i class="bi bi-gear"></i>
+            Instruksi Kerja
+        </a>
 
-            <!-- Formulir -->
-            <a href="{{ route('admin.documents.index', ['category' => 'formulir']) }}"
-                class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
+        <!-- Formulir -->
+        <a href="{{ route('admin.documents.index', ['category' => 'formulir']) }}"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
         {{ $currentCategory == 'formulir' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                <i class="bi bi-files"></i>
-                Formulir
-            </a>
+            <i class="bi bi-files"></i>
+            Formulir
+        </a>
 
-        </div>
+    </div>
 
-        <!-- TABLE -->
-        <div class="overflow-x-auto bg-white shadow rounded-xl">
-            <table class="w-full text-sm text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-100 text-sm uppercase text-gray-600">
-                        <th class="p-3">No</th>
-                        <th class="p-3">Nomor</th>
-                        <th class="p-3">Nama Dokumen</th>
-                        <th class="p-3">Revisi</th>
-                        <th class="p-3">Unit Kerja</th>
-                        <th class="p-3">Keterangan</th>
-                        <th class="p-3">Tanggal</th>
-                        <th class="p-3">Action</th>
-                    </tr>
-                </thead>
+    <!-- TABLE -->
+    <div class="bg-white rounded-xl shadow border overflow-hidden">
+        <table class="w-full text-sm">
 
-                <tbody>
-                    @forelse ($documents as $doc)
-                        <tr class="border-b hover:bg-gray-50">
+            <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wide">
+                <tr>
+                    <th class="p-4 text-left">No</th>
+                    <th class="p-4 text-left">Nomor</th>
+                    <th class="p-4 text-left">Nama Dokumen</th>
+                    <th class="p-4 text-left">Rev</th>
+                    <th class="p-4 text-left">Unit</th>
+                    <th class="p-4 text-left">Tanggal</th>
+                    <th class="p-4 text-center">Aksi</th>
+                </tr>
+            </thead>
 
-                               <td class="p-3">{{ $loop->iteration }}</td>
-                            <!-- ACTION -->
+            <tbody class="divide-y divide-gray-100">
 
+                @forelse($documents as $doc)
+                    <tr class="hover:bg-gray-50 transition">
 
-                                <!-- NOMOR -->
-                            <td class="p-3">{{ $doc->document_number }}</td>
+                        <td class="p-4 text-gray-500">
+                            {{ $loop->iteration }}
+                        </td>
 
-                            <!-- NAMA DOKUMEN -->
-                            <td class="p-3 font-semibold">
+                        <td class="p-4 font-medium">
+                            {{ $doc->document_number }}
+                        </td>
+
+                        <td class="p-4">
+                            <div class="font-semibold text-gray-800">
                                 {{ $doc->title }}
-                            </td>
-
-                            <!-- REVISI -->
-                            <td class="p-3">{{ $doc->revision ?? 0 }}</td>
-
-                            <!-- UNIT KERJA -->
-                            <td class="p-3">
-                                {{ $doc->department->name ?? '-' }}
-                            </td>
-
-                            <!-- KETERANGAN -->
-                            <td class="p-3">
+                            </div>
+                            <div class="text-xs text-gray-400">
                                 {{ $doc->description ?? '-' }}
-                            </td>
+                            </div>
+                        </td>
 
-                            <!-- TANGGAL -->
-                            <td class="p-3">
-                                {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
-                            </td>
-                             <td class="p-3 flex gap-2">
+                        <td class="p-4">
+                            <span class="bg-gray-100 px-2 py-1 rounded text-xs">
+                                {{ $doc->revision ?? 0 }}
+                            </span>
+                        </td>
+
+                        <td class="p-4">
+                            {{ $doc->department->name ?? '-' }}
+                        </td>
+
+                        <td class="p-4 text-gray-500">
+                            {{ \Carbon\Carbon::parse($doc->document_date)->format('d-m-Y') }}
+                        </td>
+
+                        <td class="p-4 text-center">
+                            <div class="flex justify-center gap-2">
+
                                 <a href="{{ route('admin.documents.preview', $doc->id) }}"
-                                    class="bg-blue-500 text-white px-2 py-1 rounded text-xs">
-                                    👁
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">
+                                    <i class="bi bi-eye"></i>
                                 </a>
-
-                                {{-- @if ($doc->file_document)
-                                    <a href="{{ asset($doc->file_document) }}"
-                                        class="bg-green-500 text-white px-2 py-1 rounded text-xs">
-                                        ⬇
-                                    </a>
-                                @endif --}}
 
                                 <a href="{{ route('admin.documents.edit', $doc->id) }}"
-                                    class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">
-                                    ✏
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-yellow-50 text-yellow-600 hover:bg-yellow-100 transition">
+                                    <i class="bi bi-pencil"></i>
                                 </a>
-                                <button type="button" onclick="openDeleteModal({{ $doc->id }})"
-                                    class="bg-red-500 text-white px-2 py-1 rounded text-xs">
-                                    🗑
+
+                                <button onclick="openDeleteModal({{ $doc->id }})"
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition">
+                                    <i class="bi bi-trash"></i>
                                 </button>
 
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center p-5 text-gray-400">
-                                Tidak ada dokumen
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center py-10 text-gray-400">
+                            Tidak ada dokumen
+                        </td>
+                    </tr>
+                @endforelse
+
+            </tbody>
+        </table>
 
     </div>
 
@@ -252,6 +234,16 @@
             const modal = document.getElementById('deleteModal');
             modal.classList.remove('flex');
             modal.classList.add('hidden');
+        }
+    </script>
+    <script>
+        let searchTimer;
+
+        function debounceSearch(form) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                form.submit();
+            }, 500); // delay 500ms biar gak reload tiap huruf
         }
     </script>
 @endsection

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
     <div class="bg-red-600 text-white px-6 py-3 rounded-t-xl">
         <h2 class="font-semibold text-lg">Recycle Bin</h2>
     </div>
