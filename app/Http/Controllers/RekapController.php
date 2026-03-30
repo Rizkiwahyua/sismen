@@ -20,7 +20,7 @@ class RekapController extends Controller
         $search       = $request->get('search');
 
         $query = Document::with(['category', 'department', 'code'])
-            ->latest();
+            ->orderBy('document_number', 'asc');
 
         // 🔎 Filter kategori
         if ($category !== 'all') {
@@ -136,6 +136,8 @@ class RekapController extends Controller
                     ->orWhere('document_number', 'like', "%$search%");
             });
         }
+
+        $query->orderBy('document_number', 'asc');
 
         $documents = $query->get();
 
