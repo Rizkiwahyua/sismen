@@ -116,7 +116,7 @@
                                     required
                                     class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-[#10a362] transition-all text-xs text-slate-700 shadow-sm cursor-pointer appearance-none"
                                 >
-                                    <option value="">-- Pilih Departemen --</option>
+                                    <option value="">-- Pilih Unit Kerja --</option>
                                     @foreach($departments as $dept)
                                         <option value="{{ $dept->name }}" {{ old('department_name') == $dept->name ? 'selected' : '' }}>
                                             {{ $dept->name }}
