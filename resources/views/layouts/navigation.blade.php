@@ -86,7 +86,7 @@
                 <div class="space-y-2.5">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Penjelasan & Tujuan Sistem</h4>
                     <p class="text-xs text-slate-650 leading-relaxed">
-                        <strong>Sistem Manajemen Dokumen SMTI</strong> (Rizkiwahyua/newdid) adalah platform repositori digital tingkat lanjut (*enterprise-grade*) yang dirancang khusus untuk digitalisasi berkas, pengarsipan, pelacakan audit, dan otentikasi dokumen perusahaan secara efisien. Sistem ini bertujuan untuk mengeliminasi alur kerja kertas manual yang berisiko, meminimalisir hilangnya dokumen fisik melalui kartu kontrol kelengkapan berkas (*upload gaps summary*), dan menjamin keaslian salinan PDF ketika dibagikan menggunakan fitur tanda air (*watermark*) dinamis yang diproses secara *real-time* langsung dari server.
+                        <strong>Sistem Manajemen Dokumen Departemen SMTI</strong> (Rizkiwahyua/sismen) adalah platform repositori digital tingkat lanjut (*enterprise-grade*) yang dirancang khusus untuk digitalisasi berkas, pengarsipan, pelacakan audit, dan otentikasi dokumen perusahaan secara efisien. Sistem ini bertujuan untuk mengeliminasi alur kerja kertas manual yang berisiko, meminimalisir hilangnya dokumen fisik melalui kartu kontrol kelengkapan berkas (*upload gaps summary*), dan menjamin keaslian salinan PDF ketika dibagikan menggunakan fitur tanda air (*watermark*) dinamis yang diproses secara *real-time* langsung dari server.
                     </p>
                 </div>
 

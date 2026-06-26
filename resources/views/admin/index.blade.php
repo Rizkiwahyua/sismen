@@ -15,7 +15,7 @@
             ['Prosedur', $totalProsedur, 'bi-diagram-3-fill', 'bg-violet-50 text-violet-600 border-violet-100'],
             ['Instruksi', $totalInstruksi, 'bi-gear-fill', 'bg-amber-50 text-amber-600 border-amber-100'],
             ['Formulir', $totalFormulir, 'bi-file-earmark-spreadsheet-fill', 'bg-rose-50 text-rose-600 border-rose-100'],
-            ['Departemen', $totalDepartemen, 'bi-building-fill', 'bg-cyan-50 text-cyan-600 border-cyan-100'],
+            ['Unit Kerja', $totalDepartemen, 'bi-building-fill', 'bg-cyan-50 text-cyan-600 border-cyan-100'],
             ['Users', $totalUsers, 'bi-people-fill', 'bg-slate-50 text-slate-600 border-slate-100'],
         ];
     @endphp
