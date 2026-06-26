@@ -55,7 +55,7 @@
                                 <i class="bi bi-building text-xs"></i>
                             </div>
                             <div class="min-w-0 flex-1">
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Departemen</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Unit Kerja</p>
                                 <p class="text-xs font-semibold text-slate-700 truncate">{{ Auth::user()->department_name ?? 'Belum ditentukan' }}</p>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
                     <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
                         <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Informasi Profil</h3>
-                        <p class="text-xs text-slate-500 mt-1">Perbarui informasi profil akun, departemen, dan email Anda.</p>
+                        <p class="text-xs text-slate-500 mt-1">Perbarui informasi profil akun, unit kerja, dan email Anda.</p>
                     </div>
 
                     <div class="p-6">
@@ -155,7 +155,7 @@
 
                                 <!-- Departemen -->
                                 <div class="col-span-1 md:col-span-2">
-                                    <label for="department_name" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Departemen</label>
+                                    <label for="department_name" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Unit Kerja</label>
                                     <div class="relative">
                                         <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                             <i class="bi bi-building text-xs"></i>
@@ -163,7 +163,7 @@
                                         <select name="department_name" 
                                                 id="department_name" 
                                                 class="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-[#0f3c7a] transition-all text-xs text-slate-700 shadow-sm cursor-pointer appearance-none">
-                                            <option value="">-- Pilih Departemen --</option>
+                                            <option value="">-- Pilih Unit Kerja --</option>
                                             @foreach($departments as $dept)
                                                 <option value="{{ $dept->name }}" {{ old('department_name', Auth::user()->department_name) == $dept->name ? 'selected' : '' }}>
                                                     {{ $dept->name }}

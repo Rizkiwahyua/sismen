@@ -7,7 +7,7 @@
         <div class="flex items-center justify-between mb-6">
             <div>
                 <h2 class="text-xl font-bold text-slate-800 tracking-tight">Edit Unit Kerja</h2>
-                <p class="text-xs text-slate-400 mt-0.5">Ubah informasi detail unit kerja / departemen</p>
+                <p class="text-xs text-slate-400 mt-0.5">Ubah informasi detail unit kerja</p>
             </div>
 
             <a href="{{ route('admin.department.index') }}"
@@ -46,7 +46,7 @@
                     <input type="text" name="name" value="{{ old('name', $department->name) }}"
                         class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 text-slate-800 transition duration-150 font-bold"
                         placeholder="Contoh: DEPARTEMEN TEKNOLOGI INFORMASI" required>
-                    <p class="text-[10px] text-slate-400 mt-1.5 font-medium">Ubah nama lengkap departemen dengan huruf kapital</p>
+                    <p class="text-[10px] text-slate-400 mt-1.5 font-medium">Ubah nama lengkap unit kerja dengan huruf kapital</p>
                 </div>
 
 
