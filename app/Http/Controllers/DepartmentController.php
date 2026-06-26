@@ -53,7 +53,7 @@ class DepartmentController extends Controller
 
         $department->update([
             'name' => $request->name,
-            'is_active' => $request->is_active ?? 1
+            'is_active' => $request->is_active ?? $department->is_active
         ]);
 
         return redirect()->route('admin.department.index')
@@ -62,6 +62,12 @@ class DepartmentController extends Controller
 
     public function destroy(Department $department)
     {
+        // 🔥 JIKA MASIH ADA DOKUMEN YANG TERHUBUNG, CEGAH PENGHAPUSAN
+        if ($department->documents()->count() > 0) {
+            return redirect()->route('admin.department.index')
+                ->with('error', 'Unit Kerja tidak dapat dihapus karena masih memiliki dokumen terhubung.');
+        }
+
         $department->delete();
 
         return redirect()->route('admin.department.index')

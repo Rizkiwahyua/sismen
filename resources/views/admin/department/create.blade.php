@@ -1,88 +1,69 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Department')
-
 @section('content')
-
-{{-- HEADER --}}
-<div class="bg-indigo-600 text-white px-6 py-3 rounded-t-xl">
-    <h2 class="font-semibold text-lg">Tambah Department</h2>
-</div>
-
-{{-- CARD --}}
-<div class="bg-white rounded-b-xl shadow border border-gray-100 p-6">
-
-    <form action="{{ route('admin.department.store') }}" method="POST">
-        @csrf
-
-        <div class="space-y-5">
-
-            {{-- Nama Department --}}
+    <div class="max-w-xl mx-auto pb-12">
+        
+        <!-- Header & Navigation -->
+        <div class="flex items-center justify-between mb-6">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Nama Department
-                </label>
-
-                <input type="text"
-                       name="name"
-                       value="{{ old('name') }}"
-                       placeholder="Masukkan nama department"
-                       class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                       required>
-
-                @error('name')
-                    <p class="text-red-500 text-xs mt-1">
-                        {{ $message }}
-                    </p>
-                @enderror
+                <h2 class="text-xl font-bold text-slate-800 tracking-tight">Tambah Unit Kerja</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Daftarkan unit kerja / departemen baru ke sistem</p>
             </div>
-
-            {{-- Status --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Status
-                </label>
-
-                <div class="flex gap-6">
-
-                    <label class="flex items-center gap-2 text-sm">
-                        <input type="radio"
-                               name="is_active"
-                               value="1"
-                               {{ old('is_active',1) == 1 ? 'checked' : '' }}>
-                        Aktif
-                    </label>
-
-                    <label class="flex items-center gap-2 text-sm">
-                        <input type="radio"
-                               name="is_active"
-                               value="0"
-                               {{ old('is_active') == 0 ? 'checked' : '' }}>
-                        Tidak Aktif
-                    </label>
-
-                </div>
-            </div>
-
-        </div>
-
-        {{-- Footer --}}
-        <div class="flex justify-between mt-8 border-t pt-4">
 
             <a href="{{ route('admin.department.index') }}"
-               class="px-5 py-2 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition">
-                Batal
+                class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2.5 rounded-xl transition duration-150 shadow-sm border border-slate-200/40">
+                <i class="bi bi-arrow-left"></i>
+                Kembali
             </a>
-
-            <button type="submit"
-                    class="px-6 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition shadow">
-                Simpan
-            </button>
-
         </div>
 
-    </form>
+        <!-- Form Card -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 md:p-8">
+            
+            <!-- Validation Errors -->
+            @if ($errors->any())
+                <div class="bg-rose-50 border border-rose-100 text-rose-700 rounded-xl p-4 mb-6 shadow-sm">
+                    <h4 class="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Terjadi Kesalahan Input
+                    </h4>
+                    <ul class="list-disc list-inside text-xs space-y-1 font-medium">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-</div>
+            <form method="POST" action="{{ route('admin.department.store') }}" class="space-y-6">
+                @csrf
 
+                <!-- Department Name Input -->
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+                        Nama Unit Kerja / Departemen <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="text" name="name" value="{{ old('name') }}"
+                        class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 text-slate-800 transition duration-150 font-bold"
+                        placeholder="Contoh: DEPARTEMEN TEKNOLOGI INFORMASI" required>
+                    <p class="text-[10px] text-slate-400 mt-1.5 font-medium">Gunakan nama lengkap departemen dengan huruf kapital</p>
+                </div>
+
+
+
+                <!-- Actions Button Row -->
+                <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
+                    <a href="{{ route('admin.department.index') }}"
+                        class="px-5 py-2.5 text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition duration-150 shadow-sm border border-slate-200/40">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-sm transition duration-150 hover:shadow hover:-translate-y-0.5">
+                        Simpan Unit Kerja
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
 @endsection

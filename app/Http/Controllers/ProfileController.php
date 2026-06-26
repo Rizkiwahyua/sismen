@@ -16,8 +16,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $departments = \App\Models\Department::orderBy('name')->get();
         return view('profile.edit', [
             'user' => $request->user(),
+            'departments' => $departments,
         ]);
     }
 
@@ -26,15 +28,26 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->safe()->except('photo'));
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('photo')) {
+            if ($user->photo && file_exists(public_path('images/' . $user->photo))) {
+                @unlink(public_path('images/' . $user->photo));
+            }
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $user->photo = $filename;
         }
 
-        $request->user()->save();
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('success', 'Profil berhasil diperbarui');
     }
 
     /**

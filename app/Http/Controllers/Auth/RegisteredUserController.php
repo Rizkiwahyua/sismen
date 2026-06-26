@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'department_name' => ['nullable', 'string', 'max:255'],
             'no_badge' => ['nullable', 'string', 'max:255'],
+            'role' => ['required', 'string', 'in:admin,user'],
         ]);
 
         User::create([
@@ -47,7 +48,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'department_name' => $request->department_name,
             'no_badge' => $request->no_badge,
-            'role' => 'user', // paksa semua register jadi user
+            'role' => $request->role,
         ]);
 
         return redirect('/')

@@ -9,16 +9,48 @@ use Illuminate\Database\QueryException;
 
 class AdminUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->paginate(10);
+        $query = User::latest();
 
-        return view('admin.user.index', compact('users'));
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('no_badge', 'like', "%{$search}%")
+                  ->orWhere('department_name', 'like', "%{$search}%");
+            });
+        }
+
+        // Role Filter
+        if ($request->filled('role') && $request->role !== 'all') {
+            $query->where('role', $request->role);
+        }
+
+        // Department Filter
+        if ($request->filled('department_name') && $request->department_name !== 'all') {
+            $query->where('department_name', $request->department_name);
+        }
+
+        $users = $query->paginate(10)->withQueryString();
+        $departments = \App\Models\Department::orderBy('name')->get();
+
+        // Summary Stats
+        $stats = [
+            'total' => User::count(),
+            'admin' => User::where('role', 'admin')->count(),
+            'user' => User::where('role', 'user')->count(),
+        ];
+
+        return view('admin.user.index', compact('users', 'departments', 'stats'));
     }
 
     public function create()
     {
-        return view('admin.user.create');
+        $departments = \App\Models\Department::orderBy('name')->get();
+        return view('admin.user.create', compact('departments'));
     }
 
     public function store(Request $request)
@@ -62,7 +94,8 @@ class AdminUserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        $departments = \App\Models\Department::orderBy('name')->get();
+        return view('admin.user.edit', compact('user', 'departments'));
     }
 
     public function update(Request $request, User $user)

@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RekapController;
+use App\Http\Controllers\DocumentDetailController;
 use App\Exports\DocumentsExport;
 use Maatwebsite\Excel\Facades\Excel;
 // Halaman login
@@ -36,7 +37,7 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
 
 
-     Route::prefix('rekap')
+        Route::prefix('rekap')
             ->name('rekap.')
             ->group(function () {
 
@@ -72,21 +73,18 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('user', AdminUserController::class);
         Route::resource('department', DepartmentController::class);
 
-        Route::get(
-            'documents/{document}/preview',
-            [DocumentController::class, 'preview']
-        )->name('documents.preview');
 
-        Route::get(
-            'documents/{document}/stream',
-            [DocumentController::class, 'stream']
-        )->name('documents.stream');
 
         #recycle bin
         Route::get(
             'trash',
             [DocumentController::class, 'trash']
         )->name('documents.trash');
+
+        Route::get(
+            'trash/export',
+            [DocumentController::class, 'exportTrash']
+        )->name('documents.trash.export');
 
         Route::post(
             'documents/{id}/restore',
@@ -97,19 +95,26 @@ Route::middleware(['auth', 'role:admin'])
             'documents/{id}/force-delete',
             [DocumentController::class, 'forceDelete']
         )->name('documents.forceDelete');
+
+
+
+        Route::get(
+            'documents/export',
+            [DocumentController::class, 'export']
+        )->name('documents.export');
     });
 
-//     Route::get('/admin/documents/export', function () {
-//     return Excel::download(new DocumentsExport, 'data-dokumen.xlsx');
-// })->name('admin.documents.export');
-    Route::get('/admin/documents/export',
-        [DocumentController::class, 'export']
-    )->name('admin.documents.export');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::put('/sub-detail/{id}', [DocumentDetailController::class, 'update'])->name('subdetail.update');
+    Route::delete('/sub-detail/{id}', [DocumentDetailController::class, 'destroy'])->name('subdetail.destroy');
+});
 
-    Route::get('/rekap', [RekapController::class, 'index'])
-                ->name('rekap.index');
-
-
+// Shared routes for viewing and downloading documents
+Route::middleware(['auth', 'role:admin,user'])->group(function () {
+    Route::get('/admin/documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
+    Route::get('/admin/documents/{document}/stream', [DocumentController::class, 'stream'])->name('admin.documents.stream');
+    Route::get('/admin/documents/{id}/download', [DocumentController::class, 'download'])->name('admin.documents.download');
+});
 
 // ============================
 // User Routes
@@ -121,6 +126,13 @@ Route::middleware(['auth', 'role:user'])
 
         Route::get('/dashboard', [UserController::class, 'index'])
             ->name('dashboard'); // nama route = user.dashboard
+
+        // Preview, Stream & Download for User Role
+        Route::get('/documents/{document}/preview', [DocumentController::class, 'preview'])->name('documents.preview');
+        Route::get('/documents/{document}/stream', [DocumentController::class, 'stream'])->name('documents.stream');
+        Route::get('/documents/{id}/download', [DocumentController::class, 'download'])->name('documents.download');
     });
+
+
 
 require __DIR__ . '/auth.php';

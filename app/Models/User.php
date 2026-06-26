@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role',
         'department_name',
         'no_badge',
+        'photo',
     ];
     /**
      * The attributes that should be hidden for serialization.

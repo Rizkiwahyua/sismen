@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Document;
+use App\Models\DocumentCode;
 use Illuminate\Http\Request;
 use App\Models\DocumentCategory;
 
@@ -41,14 +42,42 @@ $totalFormulir = Document::whereHas('category', function($q) {
 // Departemen dan Users
 $totalDepartemen = Department::count();
 $totalUsers = User::count();
-$query = Document::with(['category', 'code', 'department']);
+$query = Document::with(['category', 'code', 'department', 'details.department', 'uploader', 'updater']);
 
-        if ($request->has('category') && $request->category != 'all') {
+        if ($request->filled('category') && $request->category != 'all') {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
+
+        if ($request->has('department') && !empty($request->department)) {
+            $departmentsInput = array_filter((array) $request->department);
+            if (count($departmentsInput) > 0) {
+                $query->whereIn('department_id', $departmentsInput);
+            }
+        }
+
+        if ($request->has('code') && !empty($request->code)) {
+            $codesInput = array_filter((array) $request->code);
+            if (count($codesInput) > 0) {
+                $query->whereIn('document_code_id', $codesInput);
+            }
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('document_number', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
         $documents = $query->latest()->get();
+
+        $departments = Department::all();
+        $codes = DocumentCode::all();
 
         // ===== HITUNG STATISTIK =====
         $totalDocuments = Document::count();
@@ -89,7 +118,9 @@ $query = Document::with(['category', 'code', 'department']);
             'instruksikerja',
             'formulir',
             'totalDepartments',
-            'totalUsers'
+            'totalUsers',
+            'departments',
+            'codes'
         ));
     }
 

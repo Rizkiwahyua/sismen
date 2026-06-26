@@ -42,10 +42,13 @@ class DocumentCodeController extends Controller
     {
         $request->validate([
             'code' => 'required|string|max:50',
-            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
         ]);
 
-        $document_code->update($request->all());
+        $document_code->update([
+            'code' => strtoupper($request->code),
+            'description' => $request->description,
+        ]);
 
         return redirect()->route('admin.document-codes.index')
             ->with('success', 'Kode dokumen berhasil diperbarui');
@@ -53,6 +56,12 @@ class DocumentCodeController extends Controller
 
     public function destroy(DocumentCode $document_code)
     {
+        // 🔥 JIKA MASIH ADA DOKUMEN YANG TERHUBUNG, CEGAH PENGHAPUSAN
+        if ($document_code->documents()->count() > 0) {
+            return redirect()->route('admin.document-codes.index')
+                ->with('error', 'Kode dokumen tidak dapat dihapus karena masih memiliki dokumen terhubung.');
+        }
+
         $document_code->delete();
 
         return redirect()->route('admin.document-codes.index')

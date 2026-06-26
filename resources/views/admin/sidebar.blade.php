@@ -1,153 +1,159 @@
-<nav class="p-6 flex-1 bg-indigo-700">
-    <ul class="space-y-3 text-sm font-semibold">
+<nav class="px-3 py-2 flex-1">
+    <ul class="space-y-1 text-[13px]">
 
-  <!-- Dashboard -->
-<li>
-    <a href="{{ route('admin.dashboard') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.dashboard')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.dashboard')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-speedometer2 text-lg"></i>
-        </span>
-        Dashboard
-    </a>
-</li>
+        <!-- Section Title: Core -->
+        <li class="section-label px-3 pt-3 pb-2 transition-all duration-300"
+            x-show="!sidebarCollapsed"
+            x-transition.opacity>
+            Navigasi Utama
+        </li>
 
-<!-- Dokumen -->
-<li>
-    <a href="{{ route('admin.documents.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.documents.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.documents.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-folder text-lg"></i>
-        </span>
-        Dokumen
-    </a>
-</li>
+        <!-- Dashboard -->
+        <li>
+            <a href="{{ route('admin.dashboard') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Dashboard' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.dashboard')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.dashboard')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-grid-1x2-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Dashboard</span>
+            </a>
+        </li>
 
-<!-- Kategori -->
-{{-- <li>
-    <a href="{{ route('admin.document-categories.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.document-categories.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.document-categories.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-tags text-lg"></i>
-        </span>
-        Kategori
-    </a>
-</li> --}}
+        <!-- Section Title: Documents -->
+        <li class="section-label px-3 pt-5 pb-2 transition-all duration-300"
+            x-show="!sidebarCollapsed"
+            x-transition.opacity>
+            Manajemen Dokumen
+        </li>
 
-<!-- Kode Dokumen -->
-<li>
-    <a href="{{ route('admin.document-codes.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.document-codes.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.document-codes.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-hash text-lg"></i>
-        </span>
-        Kode Dokumen
-    </a>
-</li>
+        <!-- Dokumen -->
+        <li>
+            <a href="{{ route('admin.documents.index') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Daftar Dokumen' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.documents.index', 'admin.documents.create', 'admin.documents.edit')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.documents.index', 'admin.documents.create', 'admin.documents.edit')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-file-earmark-text-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Daftar Dokumen</span>
+            </a>
+        </li>
 
-<!-- Unit Kerja -->
-<li>
-    <a href="{{ route('admin.department.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.department.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.department.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-hash text-lg"></i>
-        </span>
-        Unit Kerja
-    </a>
-</li>
+        <!-- Kode Dokumen -->
+        <li>
+            <a href="{{ route('admin.document-codes.index') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Kode Dokumen' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.document-codes.*')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.document-codes.*')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-qr-code text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Kode Dokumen</span>
+            </a>
+        </li>
 
-<li>
-    <a href="{{ route('admin.rekap.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.rekap.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
+        <!-- Unit Kerja -->
+        <li>
+            <a href="{{ route('admin.department.index') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Unit Kerja' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.department.*')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.department.*')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-building-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Unit Kerja</span>
+            </a>
+        </li>
 
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.rekap.*')
-                ? 'bg-white text-indigo-700 shadow-md'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
+        <!-- Rekap Dokumen -->
+        <li>
+            <a href="{{ route('admin.rekap.index') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Rekap Dokumen' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.rekap.*')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.rekap.*')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-file-earmark-bar-graph-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Rekap Dokumen</span>
+            </a>
+        </li>
 
-            <i class="bi bi-hash text-lg"></i>
-        </span>
+        <!-- Section Title: Administration -->
+        <li class="section-label px-3 pt-5 pb-2 transition-all duration-300"
+            x-show="!sidebarCollapsed"
+            x-transition.opacity>
+            Administrasi Sistem
+        </li>
 
-        <span class="font-medium tracking-wide">
-            Rekap Dokumen
-        </span>
-    </a>
-</li>
+        <!-- User -->
+        <li>
+            <a href="{{ route('admin.user.index') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Manajemen User' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.user.*')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.user.*')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-people-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Manajemen User</span>
+            </a>
+        </li>
 
-
-<!-- User -->
-<li>
-    <a href="{{ route('admin.user.index') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.user.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.user.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-people text-lg"></i>
-        </span>
-        User
-    </a>
-</li>
-
-{{-- hapus --}}
-<li>
-    <a href="{{ route('admin.documents.trash') }}"
-       class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300
-       {{ request()->routeIs('admin.documents.*')
-            ? 'bg-white/20 text-white backdrop-blur-md shadow-lg'
-            : 'text-indigo-100 hover:bg-indigo-600 hover:text-white' }}">
-        <span class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300
-            {{ request()->routeIs('admin.documents.*')
-                ? 'bg-white text-indigo-700'
-                : 'bg-indigo-600 group-hover:bg-white group-hover:text-indigo-700' }}">
-            <i class="bi bi-people text-lg"></i>
-        </span>
-        🗑 Recycle Bin
-    </a>
-</li>
-
-{{-- <li>
-    <a href="{{ route('admin.documents.trash') }}">
-        🗑 Recycle Bin
-    </a>
-</li> --}}
-
+        <!-- Recycle Bin -->
+        <li>
+            <a href="{{ route('admin.documents.trash') }}"
+               :class="sidebarCollapsed ? 'justify-center px-1' : 'px-3 gap-3'"
+               :title="sidebarCollapsed ? 'Dokumen Terhapus' : ''"
+               class="menu-item flex items-center py-2 rounded-xl border border-transparent transition-all duration-150
+               {{ request()->routeIs('admin.documents.trash')
+                    ? 'active text-[#10a362] font-semibold bg-[#e2f7ea]'
+                    : 'text-slate-600 hover:bg-slate-200/40 hover:text-slate-800' }}">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150
+                    {{ request()->routeIs('admin.documents.trash')
+                        ? 'bg-[#10a362] text-white shadow-md shadow-[#10a362]/20'
+                        : 'bg-white border border-slate-200/70 text-slate-500' }}">
+                    <i class="bi bi-trash3-fill text-sm"></i>
+                </div>
+                <span x-show="!sidebarCollapsed" x-transition.opacity class="whitespace-nowrap">Dokumen Terhapus</span>
+            </a>
+        </li>
 
     </ul>
 </nav>
